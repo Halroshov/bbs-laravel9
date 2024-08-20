@@ -2,5 +2,5 @@
 @section('title', 'Home')
 
 @section('content')
-    <h1>This is Homepage!</h1>
+    <h1>这是首页!</h1>
 @endsection
