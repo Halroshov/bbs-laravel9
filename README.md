@@ -18,3 +18,19 @@
     - [x] `del resources/views/home.blade.php`
 - [x] `composer require "overtrue/laravel-lang:~6.0"` 安装 Laravel 语言包
 - [x] `php artisan lang:publish zh_CN` 发布 Laravel 语言包
+
+## 2024-08-21
+
+- 运行的命令
+  - [x] `php artisan migrate` 执行数据迁移文件
+  - [x] `composer require "mews/captcha:~3.0"` 安装验证码包
+  - [x] `php artisan vendor:publish --provider="Mews\Captcha\CaptchaServiceProvider"` 发布验证码配置文件
+  - [x] `php artisan make:middleware EnsureEmailIsVerified` 创建邮箱认证中间件
+  - [x] `php artisan event:generate` 生成监听器
+- 完成的任务
+  - 用户注册
+  - 用户注册验证码
+  - 邮箱认证
+  - 强制用户认证
+  - 认证成功提示
+  - 密码重置以及重置成功后的提示
