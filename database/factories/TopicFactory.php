@@ -11,6 +11,8 @@ class TopicFactory extends Factory
 
     public function definition(): array
     {
+        $sentence = $this->faker->sentence();
+
         return [
             'title' => $sentence,
             'body' => $this->faker->text(),
