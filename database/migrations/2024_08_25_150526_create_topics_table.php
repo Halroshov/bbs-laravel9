@@ -19,7 +19,7 @@ return new class extends Migration
             $table->integer('last_reply_user_id')->unsigned()->default(0);
             $table->integer('order')->unsigned()->default(0);
             $table->text('excerpt')->nullable();
-            $table->string('slug')->nullable"();
+            $table->string('slug')->nullable();
             $table->timestamps();
         });
 	}
