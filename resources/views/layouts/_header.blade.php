@@ -28,7 +28,6 @@
                 <li class="nav-item">
                     <a class="nav-link {{ category_nav_active(4) }}" href="{{ route('categories.show', 4) }}">公告</a>
                 </li>
-
             </ul>
 
             <!-- Right Side Of Navbar -->
@@ -43,7 +42,7 @@
                            data-bs-toggle="dropdown"
                            aria-haspopup="true" aria-expanded="false">
                             <img
-                            src="{{ Auth::user()->avatar }}"
+                                src="{{ Auth::user()->avatar }}"
                                 class="img-responsive img-circle" width="30px" height="30px" alt="">
                             {{ Auth::user()->name }}
                         </a>
@@ -52,7 +51,8 @@
                             <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">编辑资料</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" id="logout" href="#">
-                                <form action="{{ route('logout') }}" method="POST">
+                                <form action="{{ route('logout') }}" method="POST"
+                                      onsubmit="return confirm('您确定要退出吗？')">
                                     {{ csrf_field() }}
                                     <button class="btn btn-block btn-danger" type="submit" name="button">退出</button>
                                 </form>

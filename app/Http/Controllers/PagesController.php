@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 
 class PagesController extends Controller
 {
-        /**
+    /**
      * 首页
      *
      * @return Factory|View|Application
