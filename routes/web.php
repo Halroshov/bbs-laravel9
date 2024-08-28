@@ -46,7 +46,7 @@ Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit'
 // Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 // Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 
-Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('topics', 'TopicsController', ['only' => ['index',  'create', 'store', 'update', 'edit', 'destroy']]);
 // GET|HEAD        topics ....................... topics.index › TopicsController@index // 显示所有话题列表
 // POST            topics ....................... topics.store › TopicsController@store // 创建话题
 // GET|HEAD        topics/create .............. topics.create › TopicsController@create // 创建话题的页面
@@ -56,7 +56,7 @@ Route::resource('topics', 'TopicsController', ['only' => ['index', 'show', 'crea
 // GET|HEAD        topics/{topic}/edit ............ topics.edit › TopicsController@edit // 编辑话题的页面
 
 Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
-
+Route::get('topics/{topic}/{slug?}', 'TopicsController@show')->name('topics.show');
 
 // 话题表单中的图片上传
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');
