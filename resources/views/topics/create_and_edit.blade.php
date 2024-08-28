@@ -1,11 +1,11 @@
 @extends('layouts.app')
 
 @section('content')
-
-<div class="container">
+    <div class="container">
         <div class="col-md-10 offset-md-1">
             <div class="card ">
-            <div class="card-body">
+
+                <div class="card-body">
                     <h2 class="">
                         <i class="far fa-edit"></i>
                         @if ($topic->id)
@@ -14,6 +14,7 @@
                             新建话题
                         @endif
                     </h2>
+
                     <hr>
 
                     @if ($topic->id)
@@ -23,25 +24,23 @@
                                 <form action="{{ route('topics.store') }}" method="POST" accept-charset="UTF-8">
                                     @endif
 
-
                                     <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
                                     @include('shared._error')
 
-          
-               
                                     <div class="mb-3">
                                         <label for="title"></label>
                                         <input class="form-control" type="text" id="title" name="title"
                                                value="{{ old('title', $topic->title) }}"
                                                placeholder="请填写标题" required/>
                                     </div>
+
                                     <div class="mb-3">
                                         <label for="category_id"></label>
                                         <select class="form-control" id="category_id" name="category_id" required>
                                             <option value="" hidden disabled selected>请选择分类</option>
                                             @foreach ($categories as $value)
-                                                <option value="{{ $value->id }}">{{ $value->name }}</option>
+                                                <option value="{{ $value->id }}" {{ $topic->category_id == $value->id ? 'selected' : '' }}>{{ $value->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -63,9 +62,7 @@
             </div>
         </div>
     </div>
-
 @endsection
-
 
 @section('styles')
     <link rel="stylesheet" type="text/css" href="{{ asset('css/simditor.css') }}">
@@ -80,7 +77,7 @@
     <script>
         $(document).ready(function () {
             let editor = new Simditor({
-              textarea: $('#editor'),
+                textarea: $('#editor'),
                 upload: {
                     url: '{{ route('topics.upload_image') }}', // 文件上传的接口地址
                     params: { // params 表单提交的参数列表
