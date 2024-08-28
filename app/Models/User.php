@@ -9,6 +9,10 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
+/**
+ * @property integer id
+ */
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
@@ -51,5 +55,16 @@ class User extends Authenticatable implements MustVerifyEmail
     public function topics(): HasMany
     {
         return $this->hasMany(Topic::class);
+    }
+    
+    /**
+     * 判断当前用户是否是话题的作者
+     *
+     * @param $model
+     * @return bool
+     */
+    public function isAuthorOf($model): bool
+    {
+        return $this->id == $model->user_id;
     }
 }
