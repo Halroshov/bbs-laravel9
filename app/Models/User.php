@@ -4,11 +4,11 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property integer id ID
@@ -25,7 +25,6 @@ use Illuminate\Support\Facades\Auth;
  * @property Topic topics 话题
  * @property Reply replies 回复
  */
-
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory;
@@ -54,6 +53,18 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         $this->laravelNotify($instance);
+    }
+
+    /**
+     * 标记消息通知为已读
+     *
+     * @return void
+     */
+    public function markAsRead(): void
+    {
+        $this->notification_count = 0;
+        $this->save();
+        $this->unreadNotifications->markAsRead();
     }
 
     /**
@@ -87,7 +98,7 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
-    
+
     /**
      * @return HasMany
      */
@@ -95,7 +106,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Topic::class);
     }
-    
+
     /**
      * 判断当前用户是否是话题的作者
      *
@@ -106,7 +117,7 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->id == $model->user_id;
     }
-    
+
     /**
      * 用户和回复的关联
      *
