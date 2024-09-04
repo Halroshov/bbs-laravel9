@@ -11,6 +11,9 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
+use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
+use Illuminate\Foundation\Auth\Access\Authorizable;
+
 /**
  * @property integer id ID
  * @property string name 用户名
@@ -30,9 +33,9 @@ use Lab404\Impersonate\Models\Impersonate;
  *
  * @package App\Models
  */
-class User extends Authenticatable implements MustVerifyEmail
+class User extends Authenticatable implements MustVerifyEmail, AuthorizableContract
 {
-    use HasApiTokens, HasFactory, HasRoles, Impersonate;
+    use HasApiTokens, HasFactory, HasRoles, Impersonate, Authorizable;
 
     // 引入消息通知相关功能
     use Notifiable {
@@ -131,5 +134,22 @@ class User extends Authenticatable implements MustVerifyEmail
     public function replies(): HasMany
     {
         return $this->hasMany(Reply::class);
+    }
+        /**
+     * 修改器，设置密码的时候自动加密
+     * 如果密码长度不是 60，就代表是明文密码，需要加密
+     * 当我们给属性赋值时，修改器会自动被调用
+     * 例如：$user->password = 'password';
+     *
+     * @param $value
+     * @return void
+     */
+    public function setPasswordAttribute($value): void
+    {
+        if (strlen($value) != 60) {
+            $value = bcrypt($value);
+        }
+
+        $this->attributes['password'] = $value;
     }
 }
