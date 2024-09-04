@@ -1,4 +1,4 @@
-这是一个练习用的论坛项目、、
+这是一个练习用的论坛项目（注意，命令为unix风格，请针对windows平台进行调整）
 
 ## 2024-08-20 干了什么
 
@@ -137,3 +137,31 @@
     - deleted, 删除完成后触发
     - restoring, 恢复的时候触发
     - restored 恢复完成后触发
+-     - 给用户赋予角色 `$user->assignRole('admin')` 或 `$user->syncRoles(['admin', 'writer'])`
+    - 撤销用户的角色 `$user->removeRole('admin')`
+    - 是否拥有任意角色 `$user->hasAnyRole(Role::all())`
+    - 是否拥有所有角色 `$user->hasAllRoles(Role::all())`
+    - 获取用户的所有角色 `$user->getRoleNames()`
+    - 检查用户是否拥有某个权限 `$user->can('edit articles')`
+
+- 执行的命令
+    - [x] `composer require "spatie/laravel-permission:~5.5"` 安装 spatie/laravel-permission
+    - [x] `php artisan vendor:publish --provider="Spatie\Permission\PermissionServiceProvider"` 发布
+      spatie/laravel-permission 配置文件
+    - [x] `php artisan migrate` 执行数据迁移
+    - [x] `php artisan make:migration seed_roles_and_permissions_data` 创建填充 roles 和 permissions 表数据的数据迁移文件
+    - [x] `php artisan migrate:reresh --seed` 刷新数据库并填充数据（在执行这条命令的时候需要跳过 Replies
+      模型的事件监听器），生产环境不要使用
+    - [x] `composer require lab404/laravel-impersonate` 安装 lab404/laravel-impersonate 包，用于登录为其他用户
+    - [x] `php artisan vendor:publish` 发布 lab404/laravel-impersonate 配置文件，选择发布 Provider: Lab404\Impersonate\ImpersonateServiceProvider
+    - [x] `php artisan vendor:publish` 发布 lab404/laravel-impersonate 配置文件，选择发布 Provider:
+      Lab404\Impersonate\ImpersonateServiceProvider
+
+## 2024-09-04
+
+- 执行的命令
+    - [x] `composer require "summerblue/administrator:9.*"` 安装 summerblue/administrator
+    - [x] `php artisan vendor:publish --provider="Frozennode\Administrator\AdministratorServiceProvider"` 发布
+      summerblue/administrator 配置文件
+    - [x] `mkdir -p config/administrator/settings` 创建配置文件夹
+    - [x] `touch config/administrator/settings/.gitkeep` 创建 .gitkeep 文件, 在空文件夹中放置 .gitkeep 保证了 Git 会将此文件夹纳入版本控制器中。
