@@ -8,8 +8,8 @@ use Illuminate\Database\Seeder;
 
 class UsersTableSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
+
+    /**Run the database seeds.
      *
      * @return void
      */
@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
         User::factory()->count(13)->create();
 
         // 处理第一个用户的数据
-        $user = User::find(1);
+        $user = (new User)->find(1);
         $user->name = 'Halroszow';
         $user->email = 'sakurakatsuya@outlook.com';
         $user->password = bcrypt('123456789');
