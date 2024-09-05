@@ -13,7 +13,7 @@ use Spatie\Permission\Traits\HasRoles;
 use Lab404\Impersonate\Models\Impersonate;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Foundation\Auth\Access\Authorizable;
-
+use Illuminate\Support\Str;
 /**
  * @property integer id ID
  * @property string name 用户名
@@ -151,5 +151,25 @@ class User extends Authenticatable implements MustVerifyEmail, AuthorizableContr
         }
 
         $this->attributes['password'] = $value;
+    }
+    
+    /**
+     * 修改器，设置头像
+     * 当我们给属性赋值时，修改器会自动被调用
+     * 从后台上传的头像只有文件名，我们需要拼接完整的 URL
+     *
+     * @param $path
+     * @return void
+     */
+    public function setAvatarAttribute($path): void
+    {
+        // 如果不是 `http` 或者 `https` 开头，我们就在前面加上我们的域名，需要补全 URL
+        if (!Str::startsWith($path, ['http://', 'https://'])) {
+
+            // 拼接完整的 URL
+            $path = config('app.url') . '/uploads/images/avatars/' . $path;
+        }
+
+        $this->attributes['avatar'] = $path;
     }
 }
