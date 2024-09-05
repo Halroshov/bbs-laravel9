@@ -20,10 +20,10 @@ class UsersTableSeeder extends Seeder
 
         // 处理第一个用户的数据
         $user = User::find(1);
-        $user->name = 'LuStormstout';
-        $user->email = 'lustormstout@gmail.com';
-        $user->password = bcrypt('11111111');
-        $user->avatar = 'https://cdn.learnku.com/uploads/images/201710/14/1/ZqM7iaP4CR.png';
+        $user->name = 'Halroszow';
+        $user->email = 'sakurakatsuya@outlook.com';
+        $user->password = bcrypt('123456789');
+        $user->avatar = 'http://localhost:8000/uploads/images/avatars/202409/05/200.jpg';
         $user->save();
     }
 }
