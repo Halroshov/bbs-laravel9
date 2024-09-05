@@ -35,7 +35,7 @@ use Illuminate\Support\Str;
  */
 class User extends Authenticatable implements MustVerifyEmail, AuthorizableContract
 {
-    use HasApiTokens, HasFactory, HasRoles, Impersonate, Authorizable;
+    use HasApiTokens, HasFactory, HasRoles, Impersonate, Authorizable, Notifiable;
 
     // 引入消息通知相关功能
     use Notifiable {
@@ -70,8 +70,6 @@ class User extends Authenticatable implements MustVerifyEmail, AuthorizableContr
      */
     public function markAsRead(): void
     {
-        $this->notification_count = 0;
-        $this->save();
         $this->unreadNotifications->markAsRead();
     }
 
