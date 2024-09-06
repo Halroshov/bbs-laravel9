@@ -19,7 +19,8 @@ class ReplyRequest extends Request
             'content' => 'required|min:2',
         ];
     }
-        /**
+
+    /**
      * 自定义错误消息
      *
      * @return string[]

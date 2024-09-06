@@ -1,7 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,7 +14,6 @@ use App\Http\Controllers\UsersController;
 |
 */
 
-Route::redirect('/home', '/');
 Route::get('/', 'PagesController@root')->name('root');
 
 // 用户身份验证相关的路由
@@ -47,26 +47,30 @@ Route::resource('users', 'UsersController', ['only' => ['show', 'update', 'edit'
 // Route::get('/users/{user}/edit', 'UsersController@edit')->name('users.edit');
 // Route::patch('/users/{user}', 'UsersController@update')->name('users.update');
 
-Route::resource('topics', 'TopicsController', ['only' => ['index',  'create', 'store', 'update', 'edit', 'destroy']]);
+Route::resource('topics', 'TopicsController', ['only' => ['index', 'create', 'store', 'update', 'edit', 'destroy']]);
 // GET|HEAD        topics ....................... topics.index › TopicsController@index // 显示所有话题列表
 // POST            topics ....................... topics.store › TopicsController@store // 创建话题
 // GET|HEAD        topics/create .............. topics.create › TopicsController@create // 创建话题的页面
-// GET|HEAD        topics/{topic} ................. topics.show › TopicsController@show // 显示单个话题
+// GET|HEAD        topics/{topic} ................. topics.show › TopicsController@show // 显示单个话题 （修改过后不包含这个路由了）
 // PUT|PATCH       topics/{topic} ............. topics.update › TopicsController@update // 编辑话题
 // DELETE          topics/{topic} ........... topics.destroy › TopicsController@destroy // 删除话题
 // GET|HEAD        topics/{topic}/edit ............ topics.edit › TopicsController@edit // 编辑话题的页面
+Route::get('topics/{topic}/{slug?}', 'TopicsController@show')->name('topics.show');
 
 Route::resource('categories', 'CategoriesController', ['only' => ['show']]);
-Route::get('topics/{topic}/{slug?}', 'TopicsController@show')->name('topics.show');
 
 // 话题表单中的图片上传
 Route::post('upload_image', 'TopicsController@uploadImage')->name('topics.upload_image');
+
+// 话题回复
 Route::resource('replies', 'RepliesController', ['only' => ['store', 'destroy']]);
 
 // 通知列表
 Route::resource('notifications', 'NotificationsController', ['only' => ['index']]);
 
-
 // 模拟登录，用来测试 RBAC
 Route::get('/impersonate/{id}', [UsersController::class, 'impersonateUser'])->name('impersonate');
 Route::get('/stop-impersonating', [UsersController::class, 'stopImpersonating'])->name('stopImpersonating');
+
+// 权限不足页面
+Route::get('permission-denied', 'PagesController@permissionDenied')->name('permission-denied');

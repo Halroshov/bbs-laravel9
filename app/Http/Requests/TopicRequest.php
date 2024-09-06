@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 class TopicRequest extends Request
 {
-        /**
+    /**
      * 自定义验证规则
      *
      * @return array|string[]
@@ -14,7 +14,6 @@ class TopicRequest extends Request
         switch ($this->method()) {
             // CREATE
             case 'POST':
-           
             // UPDATE
             case 'PUT':
             case 'PATCH':
@@ -34,7 +33,7 @@ class TopicRequest extends Request
         }
     }
 
-        /**
+    /**
      * 自定义错误信息
      *
      * @return string[]

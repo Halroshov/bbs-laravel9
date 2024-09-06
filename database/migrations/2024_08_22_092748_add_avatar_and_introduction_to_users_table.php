@@ -12,11 +12,9 @@ return new class extends Migration {
      */
     public function up(): void
     {
-        Schema::create('categories', function (Blueprint $table) {
-            $table->id();
-            $table->string('name')->index()->comment('名称');
-            $table->text('description')->nullable()->comment('描述');
-            $table->integer('post_count')->default(0)->comment('帖子数');
+        Schema::table('users', function (Blueprint $table) {
+            $table->string('avatar')->nullable()->comment('头像');
+            $table->text('introduction')->nullable()->comment('个人简介');
         });
     }
 
@@ -27,6 +25,9 @@ return new class extends Migration {
      */
     public function down(): void
     {
-        Schema::dropIfExists('categories');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('avatar');
+            $table->dropColumn('introduction');
+        });
     }
 };

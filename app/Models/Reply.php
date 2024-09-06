@@ -18,7 +18,6 @@ use Illuminate\Support\Carbon;
  * @property-read Topic $topic 话题
  * @property-read User $user 用户
  */
-
 class Reply extends Model
 {
     use HasFactory;

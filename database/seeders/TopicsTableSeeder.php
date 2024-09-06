@@ -2,14 +2,14 @@
 
 namespace Database\Seeders;
 
+use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Topic;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class TopicsTableSeeder extends Seeder
 {
-        // 跳过模型事件
-        use WithoutModelEvents;
+    // 跳过模型事件
+    use WithoutModelEvents;
 
     public function run(): void
     {

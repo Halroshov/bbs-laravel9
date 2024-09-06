@@ -22,8 +22,9 @@ class RepliesController extends Controller
      */
     public function __construct()
     {
-		$this->middleware('auth');
+        $this->middleware('auth');
     }
+
     /**
      * 发布评论
      *
@@ -33,13 +34,14 @@ class RepliesController extends Controller
      */
     public function store(ReplyRequest $request, Reply $reply): RedirectResponse
     {
-		$reply->content = $request->content;
+        $reply->content = $request->content;
         $reply->user_id = Auth::id();
         $reply->topic_id = $request->topic_id;
         $reply->save();
         return redirect()->to($reply->topic->link())->with('success', '评论创建成功！');
     }
-	 /**
+
+    /**
      * 删除评论
      *
      * @param Reply $reply
@@ -50,6 +52,7 @@ class RepliesController extends Controller
     {
         $this->authorize('destroy', $reply);
         $reply->delete();
+
         return redirect()->to($reply->topic->link())->with('success', '评论删除成功！');
     }
 }

@@ -8,12 +8,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
+use Lab404\Impersonate\Models\Impersonate;
 use Laravel\Sanctum\HasApiTokens;
 use Spatie\Permission\Traits\HasRoles;
-use Lab404\Impersonate\Models\Impersonate;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Support\Str;
+
 /**
  * @property integer id ID
  * @property string name 用户名
@@ -28,14 +27,14 @@ use Illuminate\Support\Str;
  * @property string updated_at 更新时间
  * @property Topic topics 话题
  * @property Reply replies 回复
- * 
+ *
  * @method static find(int $id)
  *
  * @package App\Models
  */
-class User extends Authenticatable implements MustVerifyEmail, AuthorizableContract
+class User extends Authenticatable implements MustVerifyEmail
 {
-    use HasApiTokens, HasFactory, HasRoles, Impersonate, Authorizable, Notifiable;
+    use HasApiTokens, HasFactory, HasRoles, Impersonate, Traits\ActiveUserHelper;
 
     // 引入消息通知相关功能
     use Notifiable {
@@ -70,6 +69,8 @@ class User extends Authenticatable implements MustVerifyEmail, AuthorizableContr
      */
     public function markAsRead(): void
     {
+        $this->notification_count = 0;
+        $this->save();
         $this->unreadNotifications->markAsRead();
     }
 
@@ -114,7 +115,8 @@ class User extends Authenticatable implements MustVerifyEmail, AuthorizableContr
     }
 
     /**
-     * 判断当前用户是否是话题的作者
+     * 判断当前用户是否是话题或者回复的作者
+     * 准确的说是判断当前用户是否是某个模型（$model）的作者
      *
      * @param $model
      * @return bool
@@ -133,7 +135,8 @@ class User extends Authenticatable implements MustVerifyEmail, AuthorizableContr
     {
         return $this->hasMany(Reply::class);
     }
-        /**
+
+    /**
      * 修改器，设置密码的时候自动加密
      * 如果密码长度不是 60，就代表是明文密码，需要加密
      * 当我们给属性赋值时，修改器会自动被调用
@@ -150,7 +153,7 @@ class User extends Authenticatable implements MustVerifyEmail, AuthorizableContr
 
         $this->attributes['password'] = $value;
     }
-    
+
     /**
      * 修改器，设置头像
      * 当我们给属性赋值时，修改器会自动被调用

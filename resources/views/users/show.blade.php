@@ -12,7 +12,7 @@
                      src="{{ $user->avatar }}"
                      alt="{{ $user->name }}">
                 <div class="card-body">
-                    <h5><strong>个人简介</strong></h5>               
+                    <h5><strong>个人简介</strong></h5>
                     <p>{{ $user->introduction }}</p>
                     <hr>
                     <h5><strong>注册于</strong></h5>
@@ -31,15 +31,15 @@
             {{-- 用户发布的内容 --}}
             <div class="card ">
                 <div class="card-body">
-                <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs">
                         <li class="nav-item">
-                        <a class="nav-link bg-transparent {{ active_class(if_query('tab', null)) }}"
+                            <a class="nav-link bg-transparent {{ active_class(if_query('tab', null)) }}"
                                href="{{ route('users.show', $user->id) }}">
                                 Ta 的话题
                             </a>
                         </li>
                         <li class="nav-item">
-                        <a class="nav-link bg-transparent {{ active_class(if_query('tab', 'replies')) }}"
+                            <a class="nav-link bg-transparent {{ active_class(if_query('tab', 'replies')) }}"
                                href="{{ route('users.show', [$user->id, 'tab' => 'replies']) }}">
                                 Ta 的回复
                             </a>

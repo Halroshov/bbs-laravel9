@@ -26,12 +26,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
  * @property-read Reply replies 回复
  * @extends \Illuminate\Database\Eloquent\Model
  */
-
 class Topic extends Model
 {
     use HasFactory;
-    
-        /**
+
+    /**
      * 定义可以批量赋值的字段
      * 允许用户直接对数据进行修改，通过表单提交 title、body、category_id、excerpt、slug 字段来新增话题
      * 在每一次开发数据模型的 CURD 功能时，都需要在模型中定义 $fillable 属性，以防止恶意修改数据。
@@ -59,7 +58,7 @@ class Topic extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     /**
      * 话题排序
      *
@@ -103,7 +102,7 @@ class Topic extends Model
         // 按照创建时间排序
         return $query->orderBy('created_at', 'desc');
     }
-    
+
     /**
      * 话题与回复的关联
      *
@@ -113,8 +112,8 @@ class Topic extends Model
     {
         return $this->hasMany(Reply::class)->orderBy('created_at', 'desc');
     }
-    
-        /**
+
+    /**
      * 当话题有新回复或者删除回复时
      * 我们需要更新话题的 reply_count 属性
      *

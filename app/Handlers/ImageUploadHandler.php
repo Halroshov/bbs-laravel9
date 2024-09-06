@@ -34,7 +34,7 @@ class ImageUploadHandler
         // 值如：/home/vagrant/Code/bbs/public/uploads/images/avatars/201709/21/
         $upload_path = public_path() . '/' . $folder_name;
 
-        // 获取文件的后缀名，因图片从剪贴板里粘贴时后缀名为空，所以此处确保后缀一直存在
+        // 获取文件的后缀名，因图片从剪贴板里黏贴时后缀名为空，所以此处确保后缀一直存在
         $extension = strtolower($file->getClientOriginalExtension()) ?: 'png';
 
         // 拼接文件名，加前缀是为了增加辨析度，前缀可以是相关数据模型的 ID

@@ -12,7 +12,7 @@
                 <div class="flex-grow-1 ms-2">
 
                     <div class="mt-0 mb-1">
-                    <a href="{{ $topic->link() }}" title="{{ $topic->title }}">
+                        <a href="{{ $topic->link() }}" title="{{ $topic->title }}">
                             {{ $topic->title }}
                         </a>
                         <a class="float-end" href="{{ $topic->link() }}">
@@ -22,8 +22,8 @@
 
                     <small class="media-body meta text-secondary">
 
-                    <a class="text-secondary" href="{{ route('categories.show', $topic->category_id) }}"
-                    title="{{ $topic->category->name }}">
+                        <a class="text-secondary" href="{{ route('categories.show', $topic->category_id) }}"
+                           title="{{ $topic->category->name }}">
                             <i class="far fa-folder"></i>
                             {{ $topic->category->name }}
                         </a>

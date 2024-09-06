@@ -18,6 +18,7 @@ class TopicPolicy extends Policy
     {
         return $user->isAuthorOf($topic);
     }
+
     /**
      * 授权策略，只有话题作者才能删除话题
      *

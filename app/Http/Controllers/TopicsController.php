@@ -2,22 +2,23 @@
 
 namespace App\Http\Controllers;
 
+use App\Handlers\ImageUploadHandler;
+use App\Models\Category;
 use App\Models\Topic;
-use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\TopicRequest;
+use App\Models\User;
 use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
-use App\Models\Category;
+use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\TopicRequest;
 use Illuminate\Support\Facades\Auth;
-use App\Handlers\ImageUploadHandler;
 
 class TopicsController extends Controller
 {
-	
+
     /**
      * TopicsController constructor.
      */
@@ -29,24 +30,26 @@ class TopicsController extends Controller
         // 通过 $this->middleware('auth', ['except' => ['index', 'show']]) 方法，我们可以为控制器指定中间件，这样，除了 index 和 show 方法，其他方法都需要登录用户才能访问
         $this->middleware('auth', ['except' => ['index', 'show']]);
     }
+
     /**
      * 显示话题列表
      * 用 with() 方法预加载了话题数据的用户数据和分类数据，预加载是为了避免 N+1 问题
      *
-    * @param Request $request
+     * @param Request $request
      * @param Topic $topic
-	 * @return View|Factory|Application
+     * @param User $user
+     * @return View|Factory|Application
      */
-    public function index(Request $request, Topic $topic): View|Factory|Application
+    public function index(Request $request, Topic $topic, User $user): View|Factory|Application
     {
-		$topics = $topic->withOrder($request->order)
-		->with('user', 'category') // 预加载 user 和 category 关联，避免 N+1 问题
-		->paginate(20);
-
-        return view('topics.index', compact('topics'));
+        $topics = $topic->withOrder($request->order)
+            ->with('user', 'category') // 预加载 user 和 category 关联，避免 N+1 问题
+            ->paginate(20);
+        $active_users = $user->getActiveUsers();
+        return view('topics.index', compact('topics', 'active_users'));
     }
 
-       /**
+    /**
      * 显示话题详情
      *
      * @param Topic $topic
@@ -89,6 +92,8 @@ class TopicsController extends Controller
 
         return redirect()->to($topic->link())->with('success', '成功创建话题！');
     }
+
+
     /**
      * 显示编辑话题页面
      *
@@ -98,6 +103,7 @@ class TopicsController extends Controller
      */
     public function edit(Topic $topic): Factory|View|Application
     {
+        $this->authorize('update', $topic);
         $categories = Category::all();
         return view('topics.create_and_edit', compact('topic', 'categories'));
     }
@@ -131,7 +137,7 @@ class TopicsController extends Controller
 
         return redirect()->route('topics.index')->with('success', '成功删除！');
     }
-    
+
     /**
      * 上传图片
      *

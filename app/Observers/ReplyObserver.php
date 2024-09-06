@@ -19,11 +19,12 @@ class ReplyObserver
      */
     public function creating(Reply $reply): void
     {
-                // 使用 mews/purifier 来过滤内容，防止 XSS 攻击
+        // 使用 mews/purifier 来过滤内容，防止 XSS 攻击
         // clean() 函数是由 mews/purifier 提供的辅助方法
         $reply->content = clean($reply->content, 'user_topic_body');
     }
-        /**
+
+    /**
      * 事件监听：在回复创建后，去更新话题的回复数量
      *
      * @param Reply $reply
@@ -31,13 +32,12 @@ class ReplyObserver
      */
     public function created(Reply $reply): void
     {
-           // 更新话题的回复数量
-           $reply->topic->updateReplyCount();
-        
+        // 更新话题的回复数量
+        $reply->topic->updateReplyCount();
         // 通知话题作者有新的评论
         $reply->topic->user->notify(new TopicReplied($reply));
     }
-    
+
     /**
      * 事件监听：在回复被删除后，去更新话题的回复数量
      *

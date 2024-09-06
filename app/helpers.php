@@ -7,14 +7,14 @@ use Illuminate\Support\Facades\Route;
  *
  * @return array|string|null
  */
-
 function route_class(): array|string|null
 {
     return str_replace('.', '-', Route::currentRouteName());
 }
 
 /**
-* 通过路由来判断是否为当前页面，如果是则返回 active，否则返回空字符串
+ * 通过路由来判断是否为当前页面，如果是则返回 active，否则返回空字符串
+ *
  * @param $category_id
  * @return string
  */

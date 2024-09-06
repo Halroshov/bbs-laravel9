@@ -1,10 +1,13 @@
 @php use Illuminate\Support\Facades\Request; @endphp
 @extends('layouts.app')
+
 @section('title', isset($category) ? $category->name : '话题列表')
+
 @section('content')
-<div class="row mb-5">
+
+    <div class="row mb-5">
         <div class="col-lg-9 col-md-9 topic-list">
-        @if(isset($category))
+            @if(isset($category))
                 <div class="alert alert-info" role="alert">
                     {{ $category->name }} : {{ $category->description }}
                 </div>
@@ -13,7 +16,7 @@
 
                 <div class="card-header bg-transparent">
                     <ul class="nav nav-pills">
-                    <li class="nav-item">
+                        <li class="nav-item">
                             <a class="nav-link {{ active_class(!if_query('order', 'recent')) }}"
                                href="{{ Request::url() }}?order=default">最后回复</a>
                         </li>
@@ -39,5 +42,5 @@
             @include('topics._sidebar')
         </div>
     </div>
-    
+
 @endsection

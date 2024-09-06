@@ -13,7 +13,7 @@ return [
         // 删除权限控制
         'delete' => function () {
             // 只有站长才能删除话题分类
-            return Auth::user()->role === 'Founder'; // 修改为直接比较角色
+            return Auth::user()->hasRole('Founder');
         },
     ],
 

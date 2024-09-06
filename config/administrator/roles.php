@@ -9,7 +9,7 @@ return [
     'model' => Role::class,
 
     'permission' => function () {
-        return auth()->user()->can('manage_users');
+        return Auth::user()->can('manage_users');
     },
 
     'columns' => [

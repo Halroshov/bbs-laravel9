@@ -37,7 +37,7 @@
                     <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">登录</a></li>
                     <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">注册</a></li>
                 @else
-                <li class="nav-item">
+                    <li class="nav-item">
                         <a class="nav-link mt-1 mr-3 font-weight-bold" href="{{ route('topics.create') }}">
                             <i class="fa-solid fa-plus"></i>
                         </a>
@@ -58,8 +58,21 @@
                             {{ Auth::user()->name }}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">个人中心</a>
-                            <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">编辑资料</a>
+                            @can('manage_contents')
+                                <a class="dropdown-item" href="{{ url(config('administrator.uri')) }}">
+                                    <i class="fa-solid fa-gauge-high"></i>
+                                    管理后台
+                                </a>
+                                <div class="dropdown-divider"></div>
+                            @endcan
+                            <a class="dropdown-item" href="{{ route('users.show', Auth::id()) }}">
+                                <i class="fa-solid fa-user"></i>
+                                个人中心
+                            </a>
+                            <a class="dropdown-item" href="{{ route('users.edit', Auth::id()) }}">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                                编辑资料
+                            </a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" id="logout" href="#">
                                 <form action="{{ route('logout') }}" method="POST"
