@@ -295,4 +295,5 @@
     - [x] `php artisan larabbs:calculate-active-user` 执行计算活跃用户的命令
     - [x] `php artisan cache:clear` 清除缓存
     - [x] `php artisan schedule:run` 执行计划任务
-- schtasks /create /tn "LaravelScheduler" /tr "cmd /c cd /d C:\phpstudy_pro\WWW\bbs-laravel9 && php artisan schedule:run > NUL 2>&1" /sc minute /mo 1
+- windows下创建并启用计划任务schtasks /create /tn "LaravelScheduler" /tr "cmd /c cd /d C:\phpstudy_pro\WWW\bbs-laravel9 && php artisan schedule:run > NUL 2>&1" /sc minute /mo 1
+- 停止（但不删除）计划任务 schtasks /change /tn "LaravelScheduler" /disable
