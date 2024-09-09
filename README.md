@@ -295,4 +295,4 @@
     - [x] `php artisan larabbs:calculate-active-user` 执行计算活跃用户的命令
     - [x] `php artisan cache:clear` 清除缓存
     - [x] `php artisan schedule:run` 执行计划任务
-- 在 Mac 下，可以使用 `crontab -e` 编辑计划任务，然后添加 `* * * * * cd /你的项目的绝对路径 && php artisan schedule:run >> /dev/null 2>&1`，每分钟执行一次计划任务
+- schtasks /create /tn "LaravelScheduler" /tr "cmd /c cd /d C:\phpstudy_pro\WWW\bbs-laravel9 && php artisan schedule:run > NUL 2>&1" /sc minute /mo 1
